@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         EnparaHelp
 // @namespace    http://exiclick.com/
-// @version      0.1
-// @description  Make it easier.
+// @version      0.2
+// @description  Makes it easier.
 // @author       Ishmaeel
 // @match        https://internetsubesi.qnbfinansbank.enpara.com/*
 // @grant        none
@@ -12,6 +12,10 @@
     'use strict';
 
     var table = $("#ctl00_MainContent_CurrentTermDebtByDateGridView_myTable");
+
+    if (!table.length) {
+        table = $("#ctl00_MainContent_PendingProvisionGridView_myTable");
+    }
 
     if (table.length) {
         $('#wrapper')
@@ -24,57 +28,120 @@
     function doMyStuff() {
         console.log('Doing your stuff...');
 
+        if (makeCsv()) {
+            return;
+        }
+
+        if (makeProvCsv()) {
+            return;
+        }
+
+        console.warn("table not found.");
+    }
+
+    function makeProvCsv() {
+        table = $("#ctl00_MainContent_PendingProvisionGridView_myTable");
+
+        if (table.length) {
+            console.log('Making prov csv.');
+            var csv = [];
+
+            var rows = $(table).find("tbody tr");
+
+            for (var r = 0; r < rows.length; r++) {
+                var cols = $(rows[r]).find("td");
+                var row = [];
+
+                for (var j = 0; j < cols.length; j++) {
+
+                    var col = $(cols[j]).find("span");
+
+                    var text = col.text();
+
+                    if (text.endsWith("TL ")) {
+                        text = "-" + text;
+                    }
+
+                    text = text.replace(/ +(?= )/g, '');
+                    text = text.replace(/TL/g, "")
+                    text = text.replace(/\r?\n|\r/g, " ").trim();
+
+                    row.push(text);
+                }
+
+                var legend = 'gray'
+                row.push(legend);
+
+                row.splice(0, 1);
+                row.splice(2, 0, null);
+                row.splice(2, 0, null);
+                row.splice(5, 2);
+
+                row = row.join("\t");
+
+                csv.push(row);
+            }
+
+            csv = csv.join("\r\n");
+
+            $("#myOutput").val(csv).select();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    function makeCsv() {
         var table = $("#ctl00_MainContent_CurrentTermDebtByDateGridView_myTable");
 
         if (table.length) {
-            makeCsv(table);
-        } else {
-            console.warn("table not found.");
-        }
-    }
+            console.log('Making csv.');
+            var csv = [];
 
-    function makeCsv(table) {
-        console.log('Making csv.');
-        var csv = [];
+            var rows = $(table).find("tbody tr");
 
-        var rows = $(table).find("tbody tr");
+            for (var r = 0; r < rows.length; r++) {
+                var cols = $(rows[r]).find("td");
+                var row = [];
 
-        for (var r = 0; r < rows.length; r++) {
-            var cols = $(rows[r]).find("td");
-            var row = [];
+                for (var j = 0; j < cols.length; j++) {
 
-            for (var j = 0; j < cols.length; j++) {
+                    var col = $(cols[j]).find("span");
 
-                var col = $(cols[j]).find("span");
+                    var text = col.text();
 
-                var text = col.text();
+                    if (text.endsWith("TL ")) {
+                        text = "-" + text;
+                    }
 
-                if (text.endsWith("TL ")) {
-                    text = "-" + text;
+                    text = text.replace(/ +(?= )/g, '');
+                    text = text.replace(/TL/g, "")
+                    text = text.replace(/\r?\n|\r/g, " ").trim();
+
+                    row.push(text);
                 }
 
-                text = text.replace(/ +(?= )/g, '');
-                text = text.replace(/TL/g, "")
-                text = text.replace(/\r?\n|\r/g, " ").trim();
+                var legend = 'gray'
+                row.push(legend);
 
-                row.push(text);
+                row.splice(0, 1);
+                row.splice(2, 1);
+                row.splice(5, 2);
+
+                row = row.join("\t");
+
+                csv.push(row);
             }
 
-            var legend = 'gray'
-            row.push(legend);
+            csv = csv.join("\r\n");
 
-            row.splice(0, 1);
-            row.splice(2, 1);
-            row.splice(5, 2);
+            $("#myOutput").val(csv).select();
 
-            row = row.join("\t");
-
-            csv.push(row);
+            return true;
         }
 
-        csv = csv.join("\r\n");
-
-        $("#myOutput").val(csv).select();
+        return false;
     }
 
 })();
