@@ -12,6 +12,8 @@ https://github.com/Ishmaeel/UserScripts/raw/master/GarantiHelp.user.js
 
 https://github.com/Ishmaeel/UserScripts/raw/master/EnparaHelp.user.js
 
+https://github.com/Ishmaeel/UserScripts/raw/master/YKHelp.user.js
+
 # License
 
 You are not allowed to *get caught* doing anything with these. They are mine, mine, mine!
