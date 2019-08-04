@@ -1,15 +1,17 @@
 // ==UserScript==
 // @name         EnparaHelp
 // @namespace    http://exiclick.com/
-// @version      0.2
+// @version      0.3
 // @description  Makes it easier.
 // @author       Ishmaeel
 // @match        https://internetsubesi.qnbfinansbank.enpara.com/*
 // @grant        none
+// @require      https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js
 // ==/UserScript==
 
 (function() {
     'use strict';
+    var $ = window.jQuery;
 
     var table = $("#ctl00_MainContent_CurrentTermDebtByDateGridView_myTable");
 
@@ -59,7 +61,11 @@
                     var text = col.text();
 
                     if (text.endsWith("TL ")) {
-                        text = "-" + text;
+                        if (text.startsWith("-")){
+                            text = text.substring(1);
+                        } else {
+                            text = "-" + text;
+                        }
                     }
 
                     text = text.replace(/ +(?= )/g, '');
@@ -112,7 +118,11 @@
                     var text = col.text();
 
                     if (text.endsWith("TL ")) {
-                        text = "-" + text;
+                        if (text.startsWith("-")){
+                            text = text.substring(1);
+                        } else {
+                            text = "-" + text;
+                        }
                     }
 
                     text = text.replace(/ +(?= )/g, '');
