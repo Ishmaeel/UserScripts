@@ -2,7 +2,7 @@
 // @name         YK Help
 // @namespace    http://exiclick.com/
 // @icon         http://exiclick.com/favicon.ico
-// @version      0.2
+// @version      0.3
 // @description  Helps a bit.
 // @author       Ishmaeel
 // @match        https://internetsube.yapikredi.com.tr/*
@@ -35,6 +35,11 @@
             }
 
             var amount = $(this).next().text().replace(",", ".");
+
+            if (amount.startsWith("+")) {
+                amount = "-" + amount.substring(1);
+            }
+
             amount = parseFloat(amount);
             total += amount;
         });
