@@ -2,7 +2,7 @@
 // @name         YK Help
 // @namespace    http://exiclick.com/
 // @icon         http://exiclick.com/favicon.ico
-// @version      0.3
+// @version      0.4
 // @description  Helps a bit.
 // @author       Ishmaeel
 // @match        https://internetsube.yapikredi.com.tr/*
@@ -23,7 +23,7 @@
         }
 
         var total = 0;
-        var exclusions = ["Önceki Dönem TL Hesap Özeti Borcu", "ÖDEME-İNTERNET BANKACILIĞI", "BEKLEYEN PROVİZYON"];
+        var exclusions = ["Önceki Dönem TL Hesap Özeti Borcu", "ÖDEME-İNTERNET BANKACILIĞI", "BEKLEYEN PROVİZYON", "OTOMATIK TAHSILAT HESAPTAN ODEME"];
 
         $(".dataTable tbody tr td:nth-of-type(2)").each(function () {
             var desc = $(this).text().trim();
