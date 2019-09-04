@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mantis Helpers
 // @namespace    exiclick.com
-// @version      0.1
+// @version      0.2
 // @description  Helps with taking stuff out of Mantis
 // @author       Ishmaeel
 // @match        https://www.mantisbt.org/bugs/view.php?*
@@ -12,12 +12,12 @@
 /* globals $: false */
 /* globals ClipboardJS: false */
 
-(function() {
+(function () {
     'use strict';
 
     var mantisBody = $("body#view-issue-page");
 
-    if (!mantisBody.length){
+    if (!mantisBody.length) {
         return;
     }
 
@@ -26,12 +26,13 @@
     $(".bug-id.category").append('<a class="ext_copy_btn btn btn-primary btn-white btn-round btn-xs" style="margin-left:5px;" data-copy-action="id_hash">Copy#</a>');
     $(".bug-summary.category").append('<a class="ext_copy_btn btn btn-primary btn-white btn-round btn-sm" style="margin-left:5px;" data-copy-action="summary">Copy</a>');
     $(".bug-summary.category").append('<a class="ext_copy_btn btn btn-primary btn-white btn-round btn-sm" style="margin-left:2px;" data-copy-action="summary_link">Link</a>');
+    $(".bug-summary.category").append('<a class="ext_copy_btn btn btn-primary btn-white btn-round btn-sm" style="margin-left:2px;" data-copy-action="summary_task">Task</a>');
 
     new ClipboardJS('.btn', {
-        text: function(trigger) {
+        text: function (trigger) {
             var action = $(trigger).data("copyAction");
 
-            switch(action){
+            switch (action) {
                 case "id":
                     return parseInt($(".bug-id").not(".category").first().html());
 
@@ -44,8 +45,11 @@
                 case "summary":
                     return $(".bug-summary").not(".category").first().html();
 
-                case"summary_link":
+                case "summary_link":
                     return $(".bug-summary").not(".category").first().html() + " - " + window.location;
+
+                case "summary_task":
+                    return "**" + $(".bug-summary").not(".category").first().html().replace(": ", ":** ") + " - " + window.location;
             }
         }
     });
