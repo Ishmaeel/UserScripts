@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mantis Helpers
 // @namespace    exiclick.com
-// @version      0.3
+// @version      0.4
 // @description  Helps with taking stuff out of Mantis
 // @author       Ishmaeel
 // @match        https://www.mantisbt.org/bugs/view.php?*
@@ -49,7 +49,7 @@
                     return $(".bug-summary").not(".category").first().html() + " - " + window.location;
 
                 case "summary_task":
-                    return window.location + " (**" + $(".bug-summary").not(".category").first().html().replace(": ", ":** ") + ")";
+                    return window.location + " (**" + $(".bug-summary").not(".category").first().html().replace(": ", ":** ") + ") #" + $("#dropdown_projects_menu>a").text().trim();
             }
         }
     });
