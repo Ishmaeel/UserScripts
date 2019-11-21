@@ -2,7 +2,7 @@
 // @name         YK Help
 // @namespace    http://exiclick.com/
 // @icon         http://exiclick.com/favicon.ico
-// @version      0.4
+// @version      0.5
 // @description  Helps a bit.
 // @author       Ishmaeel
 // @match        https://internetsube.yapikredi.com.tr/*
