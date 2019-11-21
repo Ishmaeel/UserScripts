@@ -34,7 +34,7 @@
                 }
             }
 
-            var amount = $(this).next().text().replace(",", ".");
+            var amount = $(this).next().text().replace(".","").replace(",", ".");
 
             if (amount.startsWith("+")) {
                 amount = "-" + amount.substring(1);
