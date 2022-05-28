@@ -16,7 +16,7 @@ https://github.com/Ishmaeel/UserScripts/raw/master/YKHelp.user.js
 
 https://github.com/Ishmaeel/UserScripts/raw/master/MantisHelpers.user.js
 
-https://raw.githubusercontent.com/Ishmaeel/UserScripts/master/DevOpsHelper.js
+https://github.com/Ishmaeel/UserScripts/raw/master/DevOpsHelper.js
 
 # License
 
