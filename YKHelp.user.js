@@ -2,7 +2,7 @@
 // @name         YK Help
 // @namespace    http://exiclick.com/
 // @icon         http://exiclick.com/favicon.ico
-// @version      0.5
+// @version      0.6
 // @description  Helps a bit.
 // @author       Ishmaeel
 // @match        https://internetsube.yapikredi.com.tr/*
@@ -14,7 +14,40 @@
     var $ = window.jQuery;
     if (!$) { return; }
 
+    console.log("YK Help 2 online.");
+
     $("body").on("click", checkAgain);
+
+    $("body").on("click", ".dataTable tbody tr", copyTransaction);
+
+    function copyTransaction() {
+        var desc = $(this).find("td").eq(1).text();
+
+        desc = desc.replace(/\s+/g, " "); // Trim double spaces
+        desc = desc.replace(" taksidi", "").replace("TL'lik işlemin ", "").replace("İSTANBUL TR", "").replace("ISTANBUL TR", "").replace("(BEKLEYEN PROVİZYON)", "");
+
+        var amount = $(this).find("td").eq(2).text().replace(".", "").replace(",", ".");
+
+        if (!amount.startsWith("+")) {
+            amount = "-" + amount;
+        }
+
+        amount = parseFloat(amount)
+
+        if (isNaN(amount)) {
+            return;
+        }
+
+        amount = amount.toString().replace(".", ",");
+
+        var output = amount + '\t' + desc;
+
+        navigator.clipboard.writeText(output);
+
+        $(this).css("background-color", "beige");
+
+        log(output);
+    }
 
     function checkAgain() {
 
@@ -34,7 +67,7 @@
                 }
             }
 
-            var amount = $(this).next().text().replace(".","").replace(",", ".");
+            var amount = $(this).next().text().replace(".", "").replace(",", ".");
 
             if (amount.startsWith("+")) {
                 amount = "-" + amount.substring(1);
